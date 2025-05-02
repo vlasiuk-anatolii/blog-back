@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { validationSchema } from './config/validation';
 import { PostsModule } from './posts/posts.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,10 +20,12 @@ import { UsersModule } from './users/users.module';
         database: configService.getOrThrow<string>('DB_NAME'),
         schema: configService.get<string>('DB_SCHEMA'),
         autoLoadEntities: true,
+        synchronize: true,
       }),
     }),
     PostsModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
