@@ -17,11 +17,11 @@ export class UsersService {
   ) {}
 
   async createUser(data: CreateUserRequest) {
-    const existing = await this.userRepository.findOne({
+    const existingUser = await this.userRepository.findOne({
       where: { email: data.email },
     });
 
-    if (existing) {
+    if (existingUser) {
       throw new UnprocessableEntityException('Email already exists!');
     }
 

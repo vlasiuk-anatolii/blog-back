@@ -1,4 +1,5 @@
-import { Post } from 'src/posts/post.entity';
+import { Post } from '../posts/post.entity';
+import { Comment } from '../comments/comment.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -42,4 +43,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Post, (post) => post.author)
   posts: Post[];
+
+  @OneToMany(() => Comment, (comment) => comment.author)
+  comments: Comment[];
 }

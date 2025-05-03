@@ -9,13 +9,14 @@ import { TokenPayload } from '../auth/token-payload.interface';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Post()
-  createUser(@Body() createUserRequest: CreateUserRequest) {
+  async createUser(@Body() createUserRequest: CreateUserRequest) {
     return this.usersService.createUser(createUserRequest);
   }
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  getMe(@CurrentUser() user: TokenPayload) {
-    return user;
+  async getMe(@CurrentUser() user: TokenPayload) {
+    const userData = await this.usersService.getUser({ id: user.userId });
+    return userData;
   }
 }

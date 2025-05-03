@@ -8,24 +8,17 @@ import {
   ManyToOne,
   JoinColumn,
   BaseEntity,
-  OneToMany,
 } from 'typeorm';
 import { User } from '../users/user.entity';
-import { Comment } from '../comments/comment.entity';
+import { Post } from '../posts/post.entity';
 
 @Entity()
-export class Post extends BaseEntity {
+export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
-
-  @Column()
   content: string;
-
-  @Column()
-  urlImg: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -39,10 +32,11 @@ export class Post extends BaseEntity {
   @Column({ default: true })
   isActive: boolean;
 
-  @ManyToOne(() => User, (user: User) => user.posts)
+  @ManyToOne(() => User, (user: User) => user.comments, { eager: true })
   @JoinColumn({ name: 'authorId' })
   author: User;
 
-  @OneToMany(() => Comment, (comment) => comment.post)
-  comments: Comment[];
+  @ManyToOne(() => Post, (post: Post) => post.comments, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'postId' })
+  post: Post;
 }

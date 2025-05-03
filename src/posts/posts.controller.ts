@@ -8,11 +8,15 @@ import {
   Patch,
   NotFoundException,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.request';
 import { UpdatePostDto } from './dto/update-post.request';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { CurrentUser } from 'src/auth/current-user.decorator';
+import { TokenPayload } from 'src/auth/token-payload.interface';
+import { Post as PostEntity } from './post.entity';
 
 @Controller('posts')
 export class PostsController {
@@ -20,14 +24,22 @@ export class PostsController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  async create(
+    @Body() createPostDto: CreatePostDto,
+    @CurrentUser() user: TokenPayload,
+  ) {
+    return this.postsService.create(createPostDto, user.userId);
   }
 
   @Get()
   @UseGuards(JwtAuthGuard)
   async findAll() {
     return this.postsService.findAll();
+  }
+
+  @Get('search')
+  async searchPosts(@Query('query') query: string): Promise<PostEntity[]> {
+    return this.postsService.searchPosts(query);
   }
 
   @Get(':id')

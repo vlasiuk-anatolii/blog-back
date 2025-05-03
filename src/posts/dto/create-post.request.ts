@@ -12,7 +12,4 @@ export class CreatePostDto {
   @IsOptional()
   @IsUrl()
   urlImg?: string;
-
-  @IsNotEmpty()
-  authorId: number;
 }
