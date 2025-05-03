@@ -2,6 +2,10 @@
 
 This is the backend part of a full-stack blog application built using **NestJS**, **PostgreSQL**, **TypeORM**, and **TypeScript**. It provides a RESTful API for managing blog posts, comments, and user authentication using JWT.
 
+## 📽️ Demo
+
+[Watch demo video](https://www.loom.com/share/98375a90e2e04f7299d248bcc2dc1445?sid=3c083be6-1c94-46b2-905f-590d0c237a2b)
+
 ## 🚀 Features
 
 * 📄 CRUD operations for posts
